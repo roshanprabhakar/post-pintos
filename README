@@ -1,0 +1,5 @@
+Important: qemu is arm emulator, not raspberry pi emulator so
+- gpu not emulated
+- only main peripherals emulated
+
+https://forums.raspberrypi.com/viewtopic.php?t=195565&start=25#p1386678
