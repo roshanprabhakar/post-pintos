@@ -2,4 +2,17 @@ Important: qemu is arm emulator, not raspberry pi emulator so
 - gpu not emulated
 - only main peripherals emulated
 
+Notes:
+- on startup, interrupts are masked and default routed to el1. To handle async
+exceptions triggered while PE at el3, we must set the corresponding scr bits.
+
+boot code explanations:
+	http://classweb.ece.umd.edu/enee447.S2021/baremetal_boot_code_for_ARMv8_A_processors.pdf
+
 https://forums.raspberrypi.com/viewtopic.php?t=195565&start=25#p1386678
+
+journal
+1 August 2023
+interrupt registers: enable, pending
+exception handling at boot -- must explicitly enable routing to el3
+

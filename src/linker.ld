@@ -1,6 +1,7 @@
 ENTRY(start)
 
 start_addr = 0x80000;
+end_addr = 0x40000000;
 
 SECTIONS
 {
@@ -16,11 +17,11 @@ SECTIONS
 		. = ALIGN(16);
 		bss_start = .;
 		*(.bss*)
-		. = ALIGN(8);
+		. = ALIGN(4096);
 		bss_end = .;
 	}
 
 	bss_size = bss_end - bss_start;
-	end = .;
+	kernel_end = .;
 }
 
