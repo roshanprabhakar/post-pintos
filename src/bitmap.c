@@ -1,4 +1,3 @@
-
 #include "bitmap.h"
 #include "string.h"
 
@@ -11,20 +10,20 @@ void init_bitmap(struct bitmap *map)
 
 // Mark a specific bit in the map. Returns the old
 // value of the bit.
-int bitmap_set(struct bitmap *map, uint64_t idx)
+void bitmap_set(struct bitmap *map, uint64_t idx)
 {
-	uint8_t bt = *((char *) map->map_start + idx / 8);
-	int ret = (bt & (1 << (idx % 8))) > 0;
-	bt |= 1 << (idx % 8);
-	*((char *) map->map_start + idx / 8) = bt;
-	return ret;
+	*((char *) map->map_start + idx / 8) |= 1 << (idx % 8);
 }
 
-/* Scan the map for n contiguous 0's. If found,
- * flip. Returns the index into the map. Flips the
- * selected bits if flip is true. n must be le 32. */
-/*
-int scan_and_flip(struct bitmap *map, int n, bool flip)
+void bitmap_clear(struct bitmap *map, uint64_t idx)
+{
+	*((char *) map->map_start + idx / 8) &= ~(1 << (idx % 8));
+}
+
+// Scan the map for n contiguous 0's. If found,
+// flip. Returns the index into the map. Flips the
+// selected bits if flip is true. n must be le 32.
+int bitmap_scan_and_flip(struct bitmap *map, int n, bool flip)
 {
 	if (n > 32) return -1;
 
@@ -33,35 +32,30 @@ int scan_and_flip(struct bitmap *map, int n, bool flip)
 	uint64_t buf;
 	register uint32_t *const buf_ref = (uint32_t *) &buf;
 
-	register uint32_t cmp;
-
+	register uint64_t cmp;
 	buf_ref[0] = map_ref[0];
 	
-	int num_grabs = map->map_size >> 2; // / sizeof(uint32_t);
-	if (num_grabs > UINT32_MAX) return -1;
-
-	for (uint32_t i = 1; i < num_grabs; ++i)
+	for (uint32_t i = 1; i < map->num_entries / 32; ++i)
 		{
 			buf_ref[1] = map_ref[i];
-			cmp = (1U << n) - 1;
-			
-			for (int j = 0; j < sizeof(uint32_t) * 8 - n; ++j)
+			cmp = (1LU << n) - 1;
+
+			for (uint32_t j = 0; j < 64 - n + 1; ++j)
 				{
-					if (cmp & ~buf == cmp) 
-						{	
+					if ((cmp & ~buf) == cmp)
+						{
 							if (flip)
 								{
 									buf |= cmp;
 									*(uint64_t *)(map_ref + i - 1) = buf;
 								}
-							return i * sizeof(uint64_t) * 8 + j;
+							return (i - 1) * 32 + j;
 						}
 					cmp <<= 1;
 				}
-
 			buf_ref[0] = buf_ref[1];
 		}
 
 	return -1;
 }
-*/
+

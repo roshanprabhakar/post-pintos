@@ -16,20 +16,6 @@ void entry_l2()
 	mini_uart_enable();
 	irq_init();
 	mem_init();
-
-	/*
-	// Test bitmap.
-	struct bitmap m = 
-		{
-			.map_start = (void *) &kernel_end,
-			.map_size = 16UL
-		};
-
-	(&kernel_end)[0] = (uint64_t) -1;
-
-	dump((void *) &kernel_end, 16);
-	*/
-	
 	
 	// Increment timer.
 	// uint32_t a = REG_GET(TIMER_CLO, uint32_t);

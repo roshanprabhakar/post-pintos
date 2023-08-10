@@ -13,6 +13,16 @@ extern uint8_t end_addr;
 // right after kernel code.
 static struct bitmap mem_map;
 
+static void *idx_to_ptr(int idx)
+{
+	return (void *) (idx * PAGE_SIZE + (uint64_t) &kernel_end);
+}
+
+static int ptr_to_idx(void *ptr)
+{
+	return ((uint64_t) ptr - (uint64_t) &kernel_end) / PAGE_SIZE;
+}
+
 void mem_init()
 {
 	printf("-----------------------------\n");
@@ -45,4 +55,23 @@ void mem_init()
 
 	printf("Page allocator initialized...\n");
 	printf("-----------------------------\n");
+}
+
+// Returns a pointer to the first page of n contiguous
+// allocated pages.
+void *palloc(int n)
+{
+	int idx = bitmap_scan_and_flip(&mem_map, n, true);
+	if (idx == -1)
+		{
+			printf("palloc error: memory store depleted.\n");
+			return 0x0;
+		}
+
+	return idx_to_ptr(idx);
+}
+
+void pfree(void *ptr)
+{
+	bitmap_clear(&mem_map, ptr_to_idx(ptr));
 }

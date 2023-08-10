@@ -14,9 +14,10 @@ struct bitmap
 // to be free at the struct's internally stored address.
 void init_bitmap(struct bitmap *);
 
-// Sets a bit in the bitmap to true. Returns the old value
-// of the bit.
-int bitmap_set(struct bitmap *, uint64_t);
+void bitmap_set(struct bitmap *, uint64_t);
+void bitmap_clear(struct bitmap *, uint64_t); 
+int bitmap_scan_and_flip(struct bitmap *, int n, bool flip);
+
 
 // int scan_and_flip(struct bitmap *, int n, bool flip);
 
