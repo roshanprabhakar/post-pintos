@@ -27,7 +27,7 @@ void mini_uart_putc(char c)
 void mini_uart_enable(void)
 {
 	// QEMU emulation removes the direct need for mini uart setup, this
-	// funciton needs to be implemented according to the register descriptions
+	// function needs to be implemented according to the register descriptions
 	// in mini-uart.h before deploying to bare metal.
 	printf("Console ready.\n");
 }

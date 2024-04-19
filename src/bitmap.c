@@ -18,6 +18,7 @@ void bitmap_set(struct bitmap *map, uint64_t idx)
 void bitmap_clear(struct bitmap *map, uint64_t idx)
 {
 	*((char *) map->map_start + idx / 8) &= ~(1 << (idx % 8));
+
 }
 
 // Scan the map for n contiguous 0's. If found,

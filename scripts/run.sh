@@ -28,6 +28,5 @@ elif [ "$1" = "--start" ]; then
 elif [ "$1" = "--help" ]; then
 	echo "usage: sh run.sh [--gdb-start | --gdb-connect]"
 	echo "--gdb-start: Start qemu with a gdb runtime."
-	echo "--gdb-connect: Run from ubuntu with gdb-multiarch, connectes to \
-		spawned lOS-gdb instance"
+	echo "--gdb-connect: Run from ubuntu with gdb-multiarch, connectes to spawned lOS-gdb instance"
 fi
