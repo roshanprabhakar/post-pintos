@@ -28,9 +28,9 @@
 #define TIMER_C2 (TIMER_BASE + 0x14)
 #define TIMER_C3 (TIMER_BASE + 0x18)
 
-#define GET_TIMER_LO (REG_GET (TIMER_CLO, uint32_t))
-#define GET_TIMER_HI (REG_GET (TIMER_CHI, uint32_t))
-#define GET_TIMER (REG_GET (TIMER_CLO, uint64_t))
+#define GET_TIMER_LO (REG_GET(TIMER_CLO, uint32_t))
+#define GET_TIMER_HI (REG_GET(TIMER_CHI, uint32_t))
+#define GET_TIMER (REG_GET(TIMER_CLO, uint64_t))
 
 void ack_timer_irq(int);
 

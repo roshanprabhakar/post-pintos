@@ -11,8 +11,13 @@ boot code explanations:
 
 https://forums.raspberrypi.com/viewtopic.php?t=195565&start=25#p1386678
 
+Download toolchain here:
+https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads
+
 journal
 1 August 2023
 interrupt registers: enable, pending
 exception handling at boot -- must explicitly enable routing to el3
 
+
+DONT MESS UP STACK ALIGNMENT, YOU SPENT 10+ HOURS ON 4/5/2024 ON STACK ALIGNMENT ISSUE

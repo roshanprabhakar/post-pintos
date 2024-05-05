@@ -5,7 +5,7 @@
 
 #include "devices/devices.h"
 
-#define INTR_REG MMIO_BASE + 0xB000
+#define INTR_REG (MMIO_BASE + 0xB000)
 
 #define IRQ_BASIC_PENDING (INTR_REG + 0x200)
 #define IRQ_PENDING_1 (INTR_REG + 0x204)
@@ -20,7 +20,7 @@
 
 void irq_init(void);
 
-void general_exception_handler(uint32_t type, uint64_t currentel, uint64_t esr, uint64_t elr);
+void general_exception_handler(uint32_t type, uint64_t currentel, uint64_t esr, uint64_t elr, uint64_t sp);
 void unknown_interrupt_level_handler(uint32_t type, uint64_t currentel);
 
 #endif // _INTERRUPTS_

@@ -27,7 +27,7 @@ halt:
 master:
 	ldr x5, =0x80000
 	mov sp, x5
-	bl clear_bso
+	bl clear_bss
 	adr x0, vtable_el3
 	msr vbar_el3, x0
 	bl route_intr_to_el3
@@ -49,3 +49,5 @@ enable_irq:
 disable_irq:
 	msr daifset, #2
 	ret
+
+	

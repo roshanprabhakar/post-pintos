@@ -49,8 +49,10 @@
 // Stores exception type on the stack as we cannot overwrite regsiters.
 .macro vector type
 	.balign 0x80
+	msr daifset, #2
 	save_gp_regs
 	mov x0, #\type
+	mov x4, sp
 	b general_exception_handler_init
 .endm
 
@@ -59,7 +61,6 @@
 #define EL3 12 // 0b1100
 
 general_exception_handler_init:
-	save_gp_regs
 	mrs x1, CurrentEL
 
 to_el1:
@@ -91,6 +92,7 @@ exception_handler_entry:
 	bl general_exception_handler
 
 	restore_gp_regs
+	msr daifclr, #2
 	eret
 
 .balign 0x800
